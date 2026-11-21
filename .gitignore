@@ -1,0 +1,18 @@
+# Python and local configuration
+__pycache__/
+.venv/
+.env
+.env.*
+
+# Downloaded snapshots, databases and credentials
+/data/raw/
+/data/*.sqlite3
+/data/*.sqlite3-*
+/data/admin-token
+
+# Local planning and design source material
+/Misja-AED-Codex-Implementation-Plan.md
+/Misja-AED-Merged-Implementation-Plan.md
+/MISJA-AED-PLAN.md
+/MC DZD - Pełna treść zadania konkursowego.pdf
+/Odblokuj-AED-identyfikacja.zip

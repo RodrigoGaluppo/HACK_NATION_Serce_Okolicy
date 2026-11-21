@@ -1,0 +1,20 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#053222"><link rel="icon" href="/brand/mark.png"><link rel="stylesheet" href="/styles.css"><title>Zgłoś AED · Odblokuj AED</title><script src="/office.js" defer></script></head>
+<body data-view="submit"><header class="masthead"><div class="header-inner"><a class="brand" href="/"><img src="/brand/wordmark.png" width="173" height="30" alt="Odblokuj AED"></a><nav aria-label="Główna nawigacja"><a href="/">Mapa AED</a><a href="/zglos">Zgłoś AED</a><a href="/panel">Panel danych</a></nav></div></header>
+<main class="page office"><header class="intro"><div><h1>Zgłoś AED</h1><p>Dodaj pojedyncze urządzenie lub prześlij listę urządzeń organizacji.</p></div></header>
+<section class="surface"><form id="submit-form">
+<div class="fields"><label>Nazwa organizacji<input id="operator" name="operator" required maxlength="150"></label><label>Rodzaj zgłoszenia<select id="format"><option value="form">Pojedyncze urządzenie</option><option value="xlsx">Skoroszyt XLSX</option><option value="csv">Plik CSV</option><option value="geojson">Plik GeoJSON</option></select></label></div>
+<fieldset id="device-fields"><legend>Dane urządzenia</legend><div class="fields">
+<label>Identyfikator urządzenia<input name="operator_device_id" required></label><label>Nazwa miejsca<input name="site_name" required></label>
+<label>Miejscowość<input name="municipality" required></label><label>Ulica<input name="street"></label><label>Numer budynku<input name="house_number"></label><label>Kod pocztowy<input name="postcode"></label>
+<label>Długość geograficzna<input name="longitude" inputmode="decimal"></label><label>Szerokość geograficzna<input name="latitude" inputmode="decimal"></label>
+<label>Poziom lub piętro<input name="level"></label><label>Stan zamka<select name="cabinet_lock_status"><option value="unknown">Nieznany</option><option value="unlocked">Otwarty</option><option value="locked">Zamknięty</option><option value="not_applicable">Nie dotyczy</option></select></label>
+<label>Rodzaj dostępu<select name="access_type"><option value="unknown">Nieznany</option><option value="public">Publiczny</option><option value="restricted">Ograniczony</option></select></label>
+<label>Godziny wg zgłoszenia<input name="opening_hours" placeholder="np. 24/7"></label>
+<label>Sprawdzenie lokalizacji<input name="location_checked_on" type="date"></label><label>Sprawdzenie dostępu<input name="access_checked_on" type="date"></label>
+<label>Gdzie jest szafka?<textarea name="placement" required></textarea></label><label>Jak uzyskać dostęp?<textarea name="access_instructions" placeholder="Bez danych prywatnych i kodów"></textarea></label>
+</div></fieldset>
+<div id="batch-fields" hidden><label>Plik z danymi<input type="file" id="batch" accept=".xlsx,.csv,.geojson,.json"></label><p><a download="wzorcowy-zakres-aed.xlsx" href="/api/template.xlsx">Wzór XLSX</a> · <a download="wzorcowy-zakres-aed.csv" href="/api/template.csv">Wzór CSV</a> · <a href="/przyklad.geojson" download>Przykład GeoJSON</a></p><p>GeoJSON używa FeatureCollection i geometrii Point z kolejnością [długość, szerokość].</p></div>
+<label class="checkbox-line"><input type="checkbox" id="consent" required> Potwierdzam, że te informacje mogą być publicznie udostępnione.</label>
+<div class="utility-row"><button class="button secondary" type="submit" id="preview-button">Sprawdź dane</button><button class="button primary" type="button" id="send-submission" disabled>Wyślij do weryfikacji</button></div>
+<p id="submit-status" role="status"></p><ul id="validation-errors"></ul>
+</form></section></main></body></html>

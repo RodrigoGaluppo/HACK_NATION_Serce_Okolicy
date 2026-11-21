@@ -1,0 +1,1 @@
+{"type":"FeatureCollection","features":[{"type":"Feature","id":"demo-001","geometry":{"type":"Point","coordinates":[21.0122,52.2297]},"properties":{"site_name":"Punkt demonstracyjny","municipality":"Warszawa","placement":"Przy recepcji","access_type":"public","opening_hours":"24/7"}}]}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mapa i lista defibrylatorów AED z lokalnych źródeł danych.">
+  <meta name="theme-color" content="#053222">
+  <link rel="icon" href="/brand/mark.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/vendor/leaflet.css">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Mapa AED · Odblokuj AED</title>
+  <script src="/vendor/leaflet.js" defer></script>
+  <script src="/offline.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#results-heading">Przejdź do wyników</a>
+  <header class="masthead">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="Odblokuj AED — mapa">
+        <img src="/brand/wordmark.png" width="173" height="30" alt="Odblokuj AED">
+      </a>
+      <nav aria-label="Główna nawigacja"><a href="/" aria-current="page">Mapa AED</a><a href="/zglos">Zgłoś AED</a><a href="/panel">Panel danych</a></nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="intro" aria-labelledby="title">
+      <div>
+        <h1 id="title">Znajdź AED</h1>
+        <p>Znajdź defibrylator i sprawdź zgłoszone warunki dostępu.</p>
+      </div>
+      <div class="coverage" id="coverage" hidden></div>
+    </section>
+
+    <section class="search-panel" aria-label="Wyszukiwanie AED">
+      <form id="search-form" role="search">
+        <div class="search-field">
+          <label for="search">Miejscowość, adres lub nazwa punktu</label>
+          <input id="search" type="search" placeholder="np. Warszawa, Krosno, hala sportowa" maxlength="100" autocomplete="off">
+        </div>
+        <button class="button primary" type="submit">Szukaj</button>
+        <button id="locate" class="button secondary" type="button">Moja lokalizacja</button>
+      </form>
+      <div class="utility-row">
+        <label><input id="available-only" type="checkbox" checked> Tylko zgłoszony dostęp publiczny</label>
+        <button type="button" class="button secondary compact" id="offline-open">Zapisz obszar offline</button>
+      </div>
+      <p class="notice" id="notice" role="status"></p>
+    </section>
+
+    <div class="dashboard">
+      <section class="results-panel" aria-labelledby="results-heading">
+        <div class="section-head">
+          <div>
+            <h2 id="results-heading" tabindex="-1">W pobliżu</h2>
+            <p id="results-summary" role="status" aria-live="polite">Ładowanie punktów AED…</p>
+          </div>
+          <div class="radius-control" id="radius-control">
+            <label for="radius">Promień</label>
+            <select id="radius">
+              <option value="5">5 km</option>
+              <option value="15">15 km</option>
+              <option value="30" selected>30 km</option>
+              <option value="60">60 km</option>
+            </select>
+          </div>
+        </div>
+        <ol id="results" class="results" aria-busy="true"></ol>
+      </section>
+
+      <section class="map-panel" id="map-panel" aria-labelledby="map-heading">
+        <div class="section-head map-head">
+          <div>
+            <h2 id="map-heading">Mapa punktów</h2>
+            <p id="map-description">OpenStreetMap</p>
+          </div>
+          <div class="map-actions">
+            <button id="google-switch" class="button secondary compact" type="button" hidden>Google Maps</button>
+            <button id="map-search" class="button secondary compact" type="button">Szukaj tutaj</button>
+            <a href="/mapa" id="expand-map" class="button secondary compact">Pełna mapa</a>
+          </div>
+        </div>
+        <div class="map-body">
+          <div id="local-map" class="local-map" role="region" aria-label="Mapa Leaflet z punktami AED"></div>
+          <div id="google-map" class="google-map" role="region" aria-label="Google Maps z punktami AED" hidden></div>
+        </div>
+        <div class="map-legend">
+          <span><i class="dot high"></i> Wysoka pewność danych</span><span><i class="dot medium"></i> Średnia</span><span><i class="dot low"></i> Niska</span>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="offline-dialog" aria-labelledby="offline-title">
+    <div class="dialog-head"><h2 id="offline-title">Obszar offline</h2><button type="button" class="button secondary compact" id="offline-close">Zamknij</button></div>
+    <p>Środek obszaru to aktualny środek mapy. Zapis obejmuje punkty AED i uproszczony podkład granic.</p>
+    <label for="offline-radius">Promień w kilometrach</label>
+    <input id="offline-radius" type="number" min="1" max="100" value="15">
+    <div class="utility-row"><button type="button" class="button primary" id="offline-save">Zapisz w przeglądarce</button><button type="button" class="button secondary" id="offline-file" hidden>Pobierz GeoJSON</button></div>
+    <p id="offline-status" role="status"></p>
+  </dialog>
+</body>
+</html>

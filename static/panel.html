@@ -1,0 +1,9 @@
+<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#053222"><link rel="icon" href="/brand/mark.png"><link rel="stylesheet" href="/styles.css"><title>Panel danych · Odblokuj AED</title><script src="/office.js" defer></script></head>
+<body data-view="admin"><header class="masthead"><div class="header-inner"><a class="brand" href="/"><img src="/brand/wordmark.png" width="173" height="30" alt="Odblokuj AED"></a><nav aria-label="Główna nawigacja"><a href="/">Mapa AED</a><a href="/zglos">Zgłoś AED</a><a href="/panel">Panel danych</a></nav></div></header>
+<main class="page office"><header class="intro"><div><h1>Panel danych</h1><p>Łączniki, weryfikacja zgłoszeń i roboczy eksport dla dane.gov.pl.</p></div></header>
+<section class="surface" id="admin-lock"><form id="admin-auth"><label>Token panelu<input type="password" id="admin-token" required autocomplete="off"></label><button class="button primary" type="submit">Otwórz panel</button></form><p id="admin-status" role="status"></p></section>
+<div id="admin-workspace" hidden>
+<section class="surface"><div class="section-head"><h2>Łączniki danych</h2><button class="button primary" id="sync-all" type="button">Odśwież wszystkie</button></div><p id="sync-status" role="status"></p><div id="connector-list" class="connector-list"></div></section>
+<section class="surface"><div class="section-head"><h2>Zgłoszenia operatorów</h2><button class="button secondary" id="portal-export" type="button">Pobierz pakiet portalu</button></div><p id="queue-status" role="status"></p><div id="submission-queue"></div></section>
+<section class="surface"><h2>Konflikty źródeł</h2><p>Rekordy pominięte przy scalaniu.</p><ul id="conflict-list"></ul></section>
+</div></main></body></html>
