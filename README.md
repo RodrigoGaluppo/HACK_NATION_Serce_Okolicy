@@ -12,6 +12,8 @@ The project separates its **public campaign landing page** (deployed as a static
   - Navigation headers inside the local app (`/app`, `/zglos`, `/panel`) link back to `/` (**O projekcie** / campaign landing page), while the landing page remains strictly self-contained.
   - Full **PL / EN** bilingual switching is built into the landing page, the interactive map PWA, the contribution intake screen, and the editor workspace.
 
+**See the product in use:** [map, offline tools and data-panel screenshots](#product-screenshots).
+
 ## Standalone LoRa device prototypes
 
 [`Lora/`](Lora/README.md) contains isolated Heltec V3 sender/receiver firmware, a hardcoded Bydgoszcz AED snapshot, a CYD nearest-location list, and a T-Watch 2020 V1 MicroPython interface with a Python loader. The displays receive LoRa locations through a Heltec bridge; distances use an explicitly labeled fixed reference, not GPS. See its README for exact hardware, wiring, flashing, data provenance and tests. This optional folder does not change the running server, PWA or data pipeline.
@@ -219,6 +221,51 @@ flowchart LR
 | `/mapa`, `/mapa-aed` | [`static/index.html`](static/index.html) | **Map-First Aliases for `/app`.** Used by the **Pełny ekran** (Full screen) control and direct map bookmarks; cached identically by the Service Worker (`sw.js`). |
 | `/zglos` | [`static/zglos.html`](static/zglos.html) | **Contribution & Inventory Intake Screen.** Download the 4-sheet `.xlsx` template, `.csv` template, or sample `.geojson`. Choose between submitting a **single device** via the form or uploading a **batch file** (`.xlsx`, `.geojson`, `.csv`, up to 500 rows / 1.6 MB). Click **Sprawdź dane** (*Preview data*) to run server-side validation and inspect row-level errors before **Wyślij do zatwierdzenia** (*Send for review*) becomes enabled. |
 | `/panel` | [`static/panel.html`](static/panel.html) | **Authenticated Editor Workspace.** Paste the local token from `data/admin-token` (or `AED_ADMIN_TOKEN`). View live source metrics, visual data-flow pipeline, per-source snapshot timestamps and SHA-256 status, trigger manual synchronization (**Synchronizuj teraz**), inspect and **Approve / Reject** pending submissions, inspect quarantined conflicts, connect new public HTTPS GeoJSON feeds, and export the `dane.gov.pl` publication ZIP package. |
+
+#### Product screenshots
+
+These screenshots show the local application on **22 November 2026**. Counts, selected records and synchronization times describe that captured session; they are not live registry totals. Open `/app` or `/panel` on your running local server to follow the same workflows. Click an image to inspect its full-size capture.
+
+##### AED map — `/app`
+
+**Find nearby AED locations in Bydgoszcz.** The map and **W pobliżu** list present the same search area, with distances, cabinet-location descriptions, evidence-confidence badges and reported opening hours. This capture shows a 5 km search radius and 78 results. Use the search field, city shortcuts or **Moja lokalizacja** to choose an area; with **Szukaj przy przesuwaniu** checked, moving the map updates the search. The colored markers help distinguish evidence quality across the results.
+
+![AED map of Bydgoszcz with nearby results, distances, evidence badges and a 5 km radius](static/Screenshots/Screenshot%20from%202026-11-22%2010-19-06.png)
+
+**Filter for stronger evidence and inspect a selected record.** The **Filtry mapy** menu is open with **Wysoka (≥70)** selected, leaving one result in this captured search. Selecting **Bydgoszcz Główna – Punkt Weryfikacji PWA** opens matching details in the sidebar and marker popup: reported public access, 24/7 hours, cabinet placement, verification dates and source attribution. **Proweniencja pól** expands field-level provenance, while **Oznacz / popraw dane** starts a correction and **GeoJSON punktu** exports the selected record. The 70/100 score describes the evidence; the device's readiness is still explicitly **unknown**.
+
+![High-confidence filter with the selected Bydgoszcz Główna record, verification dates and provenance controls](static/Screenshots/Screenshot%20from%202026-11-22%2010-19-33.png)
+
+**Compare a record with incomplete verification.** Changing the evidence filter to **Średnia i wysoka (≥45)** shows 55 results in this capture. The selected OSM record scores 55/100 and reports restricted access and opening hours, but has no recorded check dates for location, access or readiness. Keeping those unknowns visible helps users interpret the information instead of treating every map marker as an equally verified device.
+
+![Medium-and-high confidence filter with an OSM AED record showing restricted access and missing verification dates](static/Screenshots/Screenshot%20from%202026-11-22%2010-20-28.png)
+
+**See where the data comes from and download it.** Clicking **Źródła danych** opens **Źródła mapy** over the map. Source cards identify the contributing datasets, observation counts, geographic scope, update schedules, licenses and upstream links. The download buttons provide the combined registry as GeoJSON, JSON or CSV, alongside publication metadata and the XLSX template. This makes the map's underlying data available for inspection and reuse.
+
+![Map sources dialog with source attribution, licenses, update schedules and registry download buttons](static/Screenshots/Screenshot%20from%202026-11-22%2010-20-48.png)
+
+**Prepare an offline map and move data between devices.** **Twoja mapa offline** separates saving nearby AED records from downloading a small street-and-building basemap. Here the AED-pack radius is set to 50 km, the browser reports one saved registry point and no local tags, and no detailed street map has been downloaded yet. The lower card offers a separate 0.5 km street-map download. The other controls export or import JSON, GeoJSON and CSV, export local tags, and send tags to the server for review. Importing a file into the browser does not publish it to the shared registry; detailed offline streets must be downloaded separately before they can be used without a connection.
+
+![Offline map dialog showing saved AED records, import and export controls, tag synchronization and a separate street-map download](static/Screenshots/Screenshot%20from%202026-11-22%2010-21-03.png)
+
+##### Data and editor workspace — `/panel`
+
+**Follow the data from its sources to the public map.** The panel overview shows seven active sources, 18,574 source observations, no pending submissions and 23 records requiring verification in this session. The green **Od źródła do mapy** diagram connects source feeds to normalization, merging and checks, then to the map and GeoJSON/JSON/CSV exports. **Synchronizuj teraz** requests a refresh; individual source rows below expose fetch times, formats, licenses and connector status. An inactive source is shown as inactive rather than presented as a working feed. Source observations are inputs to reconciliation, so their count differs from the final number of map locations.
+
+![Data panel overview with source metrics, synchronization status, source-to-map pipeline and per-source refresh controls](static/Screenshots/Screenshot%20from%202026-11-22%2010-20-01.png)
+
+**Review submissions and keep unresolved records out of the public map.** Further down the panel, **Zgłoszenia do zatwierdzenia** is empty in this capture, while **Wymagają sprawdzenia** lists unresolved cases. Examples include a procurement lead that does not establish an installed AED, nearby records needing identity checks, and conflicting addresses sharing coordinates. Editors use this separation to avoid publishing uncertain locations automatically. **Pakiet publikacyjny ZIP** exports a publication package, and **Nowe źródło** provides paths to submit a file or location and connect a public GeoJSON feed. Editor actions require the local administrator token described in the route reference below.
+
+![Data panel showing an empty submission queue, unresolved records, publication ZIP export and new-source controls](static/Screenshots/Screenshot%20from%202026-11-22%2010-20-17.png)
+
+<details>
+<summary>Additional capture of the review queue and source controls</summary>
+
+This earlier capture shows the same panel state, including the approved PWA contribution source above the empty submission queue. The desktop's “Screenshot captured” notification covers part of the header; the unobstructed version is shown above.
+
+![Earlier capture of the data-panel review queue and source controls with a desktop screenshot notification](static/Screenshots/Screenshot%20from%202026-11-22%2010-20-11.png)
+
+</details>
 
 ---
 
