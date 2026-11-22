@@ -1,14 +1,20 @@
 {
-  "id": "/",
-  "name": "Odblokuj AED",
+  "id": "/app",
+  "name": "Serce Okolicy · Odblokuj AED",
   "short_name": "Mapa AED",
+  "description": "Ogólnopolska mapa i rejestr defibrylatorów AED dla dane.gov.pl z trybem offline PWA i tagowaniem w terenie.",
   "lang": "pl",
-  "start_url": "/",
+  "start_url": "/app",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#f3f0e8",
-  "theme_color": "#053222",
+  "background_color": "#0b3928",
+  "theme_color": "#0b3928",
   "icons": [
-    {"src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png"},
-    {"src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png"}
+    {"src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ],
+  "shortcuts": [
+    {"name": "Mapa i wyszukiwarka AED", "url": "/app", "description": "Szukaj i oznaczaj AED (także offline)"},
+    {"name": "Zgłoś lub zaimportuj AED", "url": "/zglos", "description": "Dodaj AED lub wgraj plik XLSX/GeoJSON/CSV"}
   ]
 }

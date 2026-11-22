@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');const vm=require('node:vm');const fs=require('node:fs');
+const context=vm.createContext({window:{},navigator:{onLine:true},console});vm.runInContext(fs.readFileSync('static/offline-map.js','utf8'),context);
+const validate=context.window.AEDOfflineMap.validate;
+const pack={type:'FeatureCollection',metadata:{center:{lat:52.23,lon:21.012},radius_km:1},features:[{type:'Feature',geometry:{type:'LineString',coordinates:[[21.012,52.23],[21.013,52.231]]},properties:{highway:'residential',name:'Test'}}]};
+assert.equal(validate(pack).features.length,1);
+assert.throws(()=>validate({...pack,features:[]}));assert.throws(()=>validate({...pack,metadata:{...pack.metadata,radius_km:4}}));
+assert.throws(()=>validate({...pack,metadata:{...pack.metadata,center:{lat:NaN,lon:21}}}));
+for(const coordinates of [[[200,52]],[[21,100]],[['21',52]],[[22,53]]])assert.throws(()=>validate({...pack,features:[{type:'Feature',geometry:{type:'LineString',coordinates}}]}));
+assert.throws(()=>validate({...pack,features:[{type:'Feature',geometry:{type:'GeometryCollection',geometries:[]}}]}));
+console.log('Offline vector map geometry, size, geographic extent and coverage validation: passed');

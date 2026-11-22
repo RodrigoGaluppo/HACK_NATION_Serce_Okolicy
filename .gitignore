@@ -4,11 +4,8 @@ __pycache__/
 .env
 .env.*
 
-# Downloaded snapshots, databases and credentials
-/data/raw/
-/data/*.sqlite3
-/data/*.sqlite3-*
-/data/admin-token
+# Downloaded snapshots, local databases, caches and credentials
+/data/
 
 # Local planning and design source material
 /Misja-AED-Codex-Implementation-Plan.md
@@ -16,3 +13,10 @@ __pycache__/
 /MISJA-AED-PLAN.md
 /MC DZD - Pełna treść zadania konkursowego.pdf
 /Odblokuj-AED-identyfikacja.zip
+
+# Video scratch files and intermediate renders (keep essential app/campaign assets)
+/video/*
+!/video/geo.js
+!/video/street_heart_logo.png
+!/video/Serce-Okolicy-cover.jpg
+!/video/Serce-Okolicy-v4.mp4

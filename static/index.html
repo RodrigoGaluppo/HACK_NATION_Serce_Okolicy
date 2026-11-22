@@ -3,53 +3,104 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Mapa i lista defibrylatorów AED z lokalnych źródeł danych.">
-  <meta name="theme-color" content="#053222">
-  <link rel="icon" href="/brand/mark.png">
+  <meta name="description" content="Ogólnopolska mapa i otwarty rejestr defibrylatorów AED dla dane.gov.pl z trybem offline PWA, eksportem/importem JSON i oceną pewności danych.">
+  <meta name="theme-color" content="#0b3928">
+  <link rel="icon" href="/brand/icon-192.png">
+  <link rel="apple-touch-icon" href="/brand/icon-192.png">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="stylesheet" href="/vendor/leaflet.css">
   <link rel="stylesheet" href="/styles.css">
-  <title>Mapa AED · Odblokuj AED</title>
+  <link rel="stylesheet" href="/app.css">
+  <title>Mapa AED · Serce Okolicy · Odblokuj AED</title>
   <script src="/vendor/leaflet.js" defer></script>
+  <script src="/video/geo.js" defer></script>
   <script src="/offline.js" defer></script>
+  <script src="/offline-map.js" defer></script>
   <script src="/app.js" defer></script>
+  <script src="/app-i18n.js" defer></script>
 </head>
-<body>
+<body class="main-app">
   <a class="skip" href="#results-heading">Przejdź do wyników</a>
+
   <header class="masthead">
     <div class="header-inner">
-      <a class="brand" href="/" aria-label="Odblokuj AED — mapa">
-        <img src="/brand/wordmark.png" width="173" height="30" alt="Odblokuj AED">
+      <a class="brand" href="/" aria-label="Serce Okolicy · Odblokuj AED — strona główna kampanii">
+        <span class="brand-logo-wrap">
+          <img src="/video/street_heart_logo.png" alt="" class="brand-logo-img">
+        </span>
+        <span class="brand-text">
+          <strong class="brand-title">SERCE OKOLICY</strong>
+          <small class="brand-sub">ODBLOKUJ AED · DANE.GOV.PL</small>
+        </span>
       </a>
-      <nav aria-label="Główna nawigacja"><a href="/" aria-current="page">Mapa AED</a><a href="/zglos">Zgłoś AED</a><a href="/panel">Panel danych</a></nav>
+
+      <nav class="main-nav" aria-label="Główna nawigacja">
+        <a href="/">O projekcie</a>
+        <a href="/app" aria-current="page">Mapa AED</a>
+        <a href="/zglos">Zgłoś AED</a>
+        <a href="/panel">Panel danych</a>
+      </nav>
+
+      <div class="header-tools">
+        <div class="language" aria-label="Język / Language"><button type="button" data-lang="pl" aria-pressed="true">PL</button><span>/</span><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+        <div id="net-pill" class="net-pill online" role="status" aria-live="polite">
+          <span class="net-dot"></span>
+          <span id="net-pill-label">MAPA ONLINE · SYNC 24H</span>
+        </div>
+        <button type="button" id="toggle-offline-sim" class="header-chip" title="Przełącz lokalny tryb Offline PWA bez wyłączania Wi-Fi">
+          Tryb Offline
+        </button>
+        <button type="button" id="pwa-install-btn" class="header-chip mint" title="Zainstaluj aplikację PWA lub zarządzaj pamięcią lokalną">
+          Zainstaluj aplikację
+        </button>
+      </div>
     </div>
   </header>
 
-  <main class="page">
-    <section class="intro" aria-labelledby="title">
-      <div>
-        <h1 id="title">Znajdź AED</h1>
-        <p>Znajdź defibrylator i sprawdź zgłoszone warunki dostępu.</p>
-      </div>
-      <div class="coverage" id="coverage" hidden></div>
-    </section>
-
-    <section class="search-panel" aria-label="Wyszukiwanie AED">
-      <form id="search-form" role="search">
-        <div class="search-field">
-          <label for="search">Miejscowość, adres lub nazwa punktu</label>
-          <input id="search" type="search" placeholder="np. Warszawa, Krosno, hala sportowa" maxlength="100" autocomplete="off">
+  <div id="offline-banner" class="offline-banner" hidden role="region" aria-label="Status pracy w trybie offline">
+    <div class="offline-banner-inner">
+      <div class="offline-alert-left">
+        <span class="wifi-off-badge" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <path d="M2 8.82a15 15 0 0 1 20 0M5 12.85a10 10 0 0 1 14 0M8.5 16.43a5 5 0 0 1 7 0"/>
+            <circle cx="12" cy="20" r="1.2" fill="currentColor"/>
+            <line x1="3" y1="3" x2="21" y2="21" stroke="#c92a2a" stroke-width="2.5"/>
+          </svg>
+        </span>
+        <div>
+          <strong>Pracujesz offline</strong>
+          <span>Przeglądasz zapisane punkty. Mapa uproszczona i własne oznaczenia działają bez internetu.</span>
         </div>
-        <button class="button primary" type="submit">Szukaj</button>
-        <button id="locate" class="button secondary" type="button">Moja lokalizacja</button>
-      </form>
-      <div class="utility-row">
-        <label><input id="available-only" type="checkbox" checked> Tylko zgłoszony dostęp publiczny</label>
-        <button type="button" class="button secondary compact" id="offline-open">Zapisz obszar offline</button>
       </div>
-      <p class="notice" id="notice" role="status"></p>
-    </section>
+      <div class="offline-alert-actions">
+        <span class="cache-badge">Zapisane na urządzeniu</span>
+        <button type="button" class="button compact mint-btn" id="banner-tag-btn">+ Taguj lokalizację</button>
+        <button type="button" class="button compact secondary" id="banner-export-btn">Eksport / Import JSON</button>
+      </div>
+    </div>
+  </div>
 
+  <main class="page">
+    <section class="workspace-intro" aria-labelledby="title">
+      <div><p class="workspace-kicker">SERCE OKOLICY / MAPA AED</p><h1 id="title">Pomoc jest bliżej.</h1><p>Znajdź defibrylator. Sprawdź dostęp. Zapisz mapę na później.</p></div>
+      <div class="workspace-actions"><button type="button" class="button secondary" id="sources-open">Źródła danych <span id="stat-sources">—</span></button><button type="button" class="button secondary" id="offline-open">Pobierz obszar offline</button><button type="button" class="button primary" id="open-tag-modal">+ Oznacz AED</button></div>
+    </section>
+    <section class="search-panel" aria-label="Wyszukiwanie i filtrowanie AED">
+      <form id="search-form" role="search">
+        <div class="search-field"><label for="search">Gdzie szukasz AED?</label><input id="search" type="search" placeholder="Miejscowość, adres lub nazwa miejsca" maxlength="100" autocomplete="off"></div>
+        <button class="button primary" type="submit">Szukaj</button><button id="locate" class="button secondary" type="button">Moja lokalizacja</button>
+        <details class="advanced-filters"><summary>Filtry mapy</summary><div class="filter-popover">
+          <label for="source-filter">Źródło danych</label><select id="source-filter"><option value="">Wszystkie źródła</option><option value="pwa_offline_tag">Moje lokalne punkty</option></select>
+          <label for="confidence-filter">Jakość dowodów</label><select id="confidence-filter"><option value="0">Wszystkie poziomy</option><option value="45">Średnia i wysoka (≥45)</option><option value="70">Wysoka (≥70)</option></select>
+          <label class="check-pill"><input id="available-only" type="checkbox" checked><span>Tylko dostęp publiczny</span></label>
+          <label class="check-pill"><input id="only-tagged" type="checkbox"><span>Moje lokalne punkty</span></label>
+          <p>Ocena dotyczy jakości danych. Sprawność urządzenia wymaga osobnego potwierdzenia.</p>
+        </div></details>
+      </form>
+      <div class="utility-row"><div class="city-chips" aria-label="Szybki wybór miasta"><button type="button" class="city-chip" data-city="Warszawa" data-lat="52.2297" data-lon="21.0122">Warszawa</button><button type="button" class="city-chip" data-city="Bydgoszcz" data-lat="53.1235" data-lon="18.0084">Bydgoszcz</button><button type="button" class="city-chip" data-city="Kraków" data-lat="50.0647" data-lon="19.9450">Kraków</button><button type="button" class="city-chip" data-city="Gdańsk" data-lat="54.3520" data-lon="18.6466">Gdańsk</button></div><div class="registry-count"><strong id="stat-total">—</strong> <span>punktów w rejestrze</span><span class="count-divider">/</span><strong id="stat-tagged">0</strong> <span>lokalnych</span></div></div>
+      <p class="notice" id="notice" role="status" aria-live="polite"></p>
+      <span id="sync-badge" hidden></span>
+    </section>
     <div class="dashboard">
       <section class="results-panel" aria-labelledby="results-heading">
         <div class="section-head">
@@ -64,6 +115,8 @@
               <option value="15">15 km</option>
               <option value="30" selected>30 km</option>
               <option value="60">60 km</option>
+              <option value="150">150 km</option>
+              <option value="500">Cała Polska</option>
             </select>
           </div>
         </div>
@@ -72,34 +125,219 @@
 
       <section class="map-panel" id="map-panel" aria-labelledby="map-heading">
         <div class="section-head map-head">
-          <div>
-            <h2 id="map-heading">Mapa punktów</h2>
-            <p id="map-description">OpenStreetMap</p>
+          <div class="map-title-group">
+            <span class="map-live-dot" id="map-live-dot"></span>
+            <div>
+              <h2 id="map-heading">Twoja okolica</h2>
+              <p id="map-description">OpenStreetMap + Wektorowa baza offline JS</p>
+            </div>
           </div>
           <div class="map-actions">
+            <label class="auto-search"><input type="checkbox" id="search-as-move" checked> <span>Szukaj przy przesuwaniu</span></label>
+            <button id="map-tag-toggle" class="button compact mint-btn" type="button" aria-pressed="false" title="Kliknij na mapie, aby oznaczyć lub zweryfikować AED z poziomem pewności">
+              + Punkt na mapie
+            </button>
+            <button id="vector-switch" class="button secondary compact" type="button" aria-pressed="false" title="Przełącz na pobrany silnik wektorowy JS (działa 100% bez internetu)">
+              Mapa offline
+            </button>
             <button id="google-switch" class="button secondary compact" type="button" hidden>Google Maps</button>
-            <button id="map-search" class="button secondary compact" type="button">Szukaj tutaj</button>
-            <a href="/mapa" id="expand-map" class="button secondary compact">Pełna mapa</a>
+            <button id="map-search" class="button secondary compact" type="button">Odśwież widok</button>
+            <a href="/mapa" id="expand-map" class="button secondary compact">Pełny ekran</a>
           </div>
         </div>
+
+        <div id="map-tag-hint" class="map-tag-hint" hidden>
+          <strong>Dodaj punkt:</strong> Kliknij miejsce na mapie. Oznaczenie pozostanie na tym urządzeniu, dopóki nie prześlesz go do weryfikacji.
+        </div>
+
         <div class="map-body">
           <div id="local-map" class="local-map" role="region" aria-label="Mapa Leaflet z punktami AED"></div>
           <div id="google-map" class="google-map" role="region" aria-label="Google Maps z punktami AED" hidden></div>
         </div>
+
         <div class="map-legend">
-          <span><i class="dot high"></i> Wysoka pewność danych</span><span><i class="dot medium"></i> Średnia</span><span><i class="dot low"></i> Niska</span>
+          <span><i class="dot high"></i> Wysoka pewność (70–100)</span>
+          <span><i class="dot medium"></i> Średnia pewność (45–69)</span>
+          <span><i class="dot low"></i> Niska / wymaga weryfikacji (&lt;45)</span>
+          <span><i class="dot tagged"></i> Otagowane lokalnie / PWA</span>
+          <span class="legend-right">© OpenStreetMap · <strong>Serce Okolicy</strong></span>
         </div>
       </section>
     </div>
   </main>
 
+  <!-- Dialog 1: Tagging & Confidence Level Modal -->
+  <dialog id="tag-dialog" aria-labelledby="tag-dialog-title">
+    <div class="dialog-head">
+      <div>
+        <span class="eyebrow-badge">WERYFIKACJA TERENOWA &amp; OFFLINE PWA</span>
+        <h2 id="tag-dialog-title">Oznacz miejsce AED</h2>
+      </div>
+      <button type="button" class="button secondary compact" id="tag-dialog-close">Zamknij</button>
+    </div>
+    <p class="dialog-lead">Punkt zapiszesz na tym urządzeniu, także offline. Przesłane zgłoszenia trafią do weryfikacji przed publikacją.</p>
+
+    <form id="tag-form" class="tag-form">
+      <input type="hidden" id="tag-id">
+      <div class="confidence-picker-box">
+        <div class="confidence-picker-head">
+          <label for="tag-confidence">Twoja ocena lokalizacji — deklaracja</label>
+          <output id="tag-confidence-output" class="conf-badge high">50 / 100 · OCENA ZGŁASZAJĄCEGO</output>
+        </div>
+        <input type="range" id="tag-confidence" min="20" max="100" step="5" value="50">
+        <div class="confidence-presets">
+          <button type="button" class="preset-btn active" data-conf="95">
+            <strong>95% · Wysoka</strong>
+            <span>Naoczna weryfikacja szafki i urządzenia na miejscu</span>
+          </button>
+          <button type="button" class="preset-btn" data-conf="75">
+            <strong>75% · Potwierdzona</strong>
+            <span>Potwierdzone w budynku / u zarządcy obiektu</span>
+          </button>
+          <button type="button" class="preset-btn" data-conf="50">
+            <strong>50% · Orientacyjna</strong>
+            <span>Zgłoszenie wstępne – wymaga weryfikacji</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="fields">
+        <label>Nazwa miejsca / obiektu *
+          <input id="tag-name" required maxlength="140" placeholder="np. Bydgoszcz Główna – Dworzec PKP">
+        </label>
+        <label>Miejscowość *
+          <input id="tag-municipality" required maxlength="100" placeholder="np. Bydgoszcz">
+        </label>
+        <label>Szerokość geogr. (latitude) *
+          <input id="tag-lat" required inputmode="decimal" placeholder="53.133800">
+        </label>
+        <label>Długość geogr. (longitude) *
+          <input id="tag-lon" required inputmode="decimal" placeholder="18.000900">
+        </label>
+        <label>Ulica
+          <input id="tag-street" maxlength="120" placeholder="np. Zygmunta Augusta">
+        </label>
+        <label>Numer budynku / kod pocztowy
+          <div class="inline-pair">
+            <input id="tag-house" maxlength="30" placeholder="Nr (np. 7)">
+            <input id="tag-postcode" maxlength="12" placeholder="Kod (85-082)">
+          </div>
+        </label>
+        <label>Gdzie dokładnie jest szafka AED? *
+          <input id="tag-placement" required maxlength="240" placeholder="np. Poczekalnia między peronami 3 i 4, przy kasach">
+        </label>
+        <label>Piętro / kondygnacja
+          <input id="tag-level" maxlength="40" placeholder="np. parter" >
+        </label>
+        <label>Stan zamka szafki
+          <select id="tag-lock">
+            <option value="unlocked">Otwarta / bez zamka (unlocked)</option>
+            <option value="locked">Zamknięta / alarm lub recepcja (locked)</option>
+            <option value="not_applicable">Nie dotyczy (not_applicable)</option>
+            <option value="unknown" selected>Nieznany</option>
+          </select>
+        </label>
+        <label>Rodzaj dostępu
+          <select id="tag-access">
+            <option value="public">Publiczny (public)</option>
+            <option value="restricted">Ograniczony (restricted)</option>
+            <option value="unknown" selected>Nieznany</option>
+          </select>
+        </label>
+        <label>Godziny dostępności
+          <input id="tag-hours" maxlength="100" placeholder="np. 24/7 lub Mo-Fr 08:00-18:00" >
+        </label>
+        <label>Wskazówki dotarcia (bez kodów PIN i danych osobowych)
+          <input id="tag-instructions" maxlength="240" placeholder="np. Wejście główne od strony peronów">
+        </label>
+      </div>
+
+      <div class="utility-row dialog-footer">
+        <button type="submit" class="button primary">Zapisz punkt lokalnie</button>
+        <button type="button" class="button secondary" id="tag-use-map-center">Użyj środka mapy</button>
+      </div>
+      <p id="tag-status" class="notice" role="status"></p>
+    </form>
+  </dialog>
+
+  <!-- Dialog 2: Offline Pack, Export & Import Modal -->
   <dialog id="offline-dialog" aria-labelledby="offline-title">
-    <div class="dialog-head"><h2 id="offline-title">Obszar offline</h2><button type="button" class="button secondary compact" id="offline-close">Zamknij</button></div>
-    <p>Środek obszaru to aktualny środek mapy. Zapis obejmuje punkty AED i uproszczony podkład granic.</p>
-    <label for="offline-radius">Promień w kilometrach</label>
-    <input id="offline-radius" type="number" min="1" max="100" value="15">
-    <div class="utility-row"><button type="button" class="button primary" id="offline-save">Zapisz w przeglądarce</button><button type="button" class="button secondary" id="offline-file" hidden>Pobierz GeoJSON</button></div>
-    <p id="offline-status" role="status"></p>
+    <div class="dialog-head">
+      <div>
+        <span class="eyebrow-badge">ZAPISZ / PRZENIEŚ / KORZYSTAJ</span>
+        <h2 id="offline-title">Twoja mapa offline</h2>
+      </div>
+      <button type="button" class="button secondary compact" id="offline-close">Zamknij</button>
+    </div>
+
+    <div class="dialog-grid">
+      <div class="dialog-box">
+        <h3>Zapisz okolicę</h3>
+        <p>Zapisz punkty wokół środka mapy. Aplikacja i uproszczona mapa Polski działają lokalnie; szczegółowe ulice wymagają internetu.</p>
+        <div class="inline-controls">
+          <label for="offline-radius">Promień (km):
+            <input id="offline-radius" type="number" min="1" max="500" value="50">
+          </label>
+          <button type="button" class="button primary" id="offline-save">Zapisz bazę w przeglądarce</button>
+        </div>
+        <p id="offline-status" class="status-note" role="status"></p>
+      </div>
+
+      <div class="dialog-box">
+        <h3>Przenieś swoje dane</h3>
+        <p>Pobierz zapisane punkty i oznaczenia jako JSON, GeoJSON lub CSV ze wspólnym zakresem pól. Pliki lokalne mogą zawierać niezatwierdzone zgłoszenia.</p>
+        <div class="export-buttons">
+          <button type="button" class="button primary compact" id="offline-file">
+            Eksportuj GeoJSON (.geojson)
+          </button>
+          <button type="button" class="button secondary compact" id="export-canonical-json">
+            Eksportuj JSON
+          </button>
+          <button type="button" class="button secondary compact" id="export-canonical-csv">
+            Eksportuj CSV
+          </button>
+          <button type="button" class="button secondary compact" id="export-tags-only">
+            Eksportuj tylko moje tagi (.geojson)
+          </button>
+        </div>
+      </div>
+
+      <div class="dialog-box full-span">
+        <h3>Dodaj plik do swojej mapy</h3>
+        <p>Wybierz JSON, GeoJSON lub CSV. Poprawne punkty zapiszesz na urządzeniu bez połączenia z serwerem. Publikacja wymaga osobnego zatwierdzenia.</p>
+        <div class="import-row">
+          <input type="file" id="import-offline-file" accept=".geojson,.json,.csv">
+          <button type="button" class="button primary compact" id="import-offline-btn">Importuj do mapy PWA</button>
+          <button type="button" class="button secondary compact" id="sync-tags-btn">Synchronizuj tagi z serwerem</button>
+          <button type="button" class="button secondary compact" id="clear-tags-btn">Wyczyść lokalne tagi</button>
+        </div>
+        <p id="import-status" class="status-note" role="status"></p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Dialog 3: Sources, Daily Sync & dane.gov.pl JSON Architecture -->
+  <dialog id="sources-dialog" aria-labelledby="sources-title">
+    <div class="dialog-head">
+      <div>
+        <span class="eyebrow-badge">POCHODZENIE / AKTUALNOŚĆ / POBIERANIE</span>
+        <h2 id="sources-title">Źródła mapy</h2>
+      </div>
+      <button type="button" class="button secondary compact" id="sources-close">Zamknij</button>
+    </div>
+
+    <div class="arch-callout">
+      <strong>Otwarte dane, sprawdzalne pochodzenie.</strong><p>Każdy punkt zachowuje źródła i daty dostępnych obserwacji. Brak informacji o dostępie lub sprawności oznacza „nieznane”. Pobierz rejestr w spójnym formacie JSON, GeoJSON lub CSV.</p>
+      <div class="export-buttons" style="margin-top:10px">
+        <a class="button primary compact" href="/api/aed.geojson" download="aed.geojson">Pobierz pełny aed.geojson</a>
+        <a class="button secondary compact" href="/api/aed.json" download="aed_registry.json">Pobierz aed_registry.json</a>
+        <a class="button secondary compact" href="/api/aed.csv" download="aed.csv">Pobierz aed.csv</a>
+        <a class="button secondary compact" href="/api/portal-metadata.json" download="portal-metadata.json">portal-metadata.json</a>
+        <a class="button secondary compact" href="/api/template.xlsx" download="wzorcowy-zakres-aed.xlsx">Wzorcowy zakres XLSX</a>
+      </div>
+    </div>
+
+    <div id="sources-modal-list" class="connector-list" style="margin-top:14px"></div>
   </dialog>
 </body>
 </html>

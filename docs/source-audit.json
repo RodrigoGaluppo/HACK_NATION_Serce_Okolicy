@@ -1,0 +1,247 @@
+{
+  "audited_at": "2026-11-22T02:30:13.287384+00:00",
+  "scope": "Polish AED source audit against the merged implementation plan and live provider endpoints. This is not a complete inventory of every AED database in Poland.",
+  "public_points_at_audit": 15287,
+  "storage": {
+    "canonical": "JSON/GeoJSON/CSV snapshots and public export contract",
+    "query_index": "SQLite R*Tree for bounded spatial lookup; JSON files alone do not provide a spatial index",
+    "history": "Changed validated raw snapshots retained by SHA-256 under data/raw/history/<source>"
+  },
+  "sources": [
+    {
+      "id": "osm",
+      "name": "OpenAEDMap / OpenStreetMap Polska",
+      "provider_or_catalogue_url": "https://openaedmap.org/api/v1/countries/PL.geojson",
+      "raw_imported_records_at_audit": 18298,
+      "adapter_status": "configured",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "National OSM baseline. Alternative OSM mirrors and Geoportal are the same underlying community dataset, not independent corroboration.",
+      "license": "ODbL 1.0 (OpenStreetMap)",
+      "license_reviewed": true
+    },
+    {
+      "id": "krosno",
+      "name": "Miasto Krosno (dane.gov.pl #3624)",
+      "provider_or_catalogue_url": "https://api.dane.gov.pl/media/resources/20240219/Defibrylator_jAmxQcp.csv",
+      "raw_imported_records_at_audit": 21,
+      "adapter_status": "configured",
+      "last_successful_download": "https://api.dane.gov.pl/resources/54632,defibrylatory-zlokalizowane-w-miescie-krosno/file",
+      "sha256": "bfd98b17099e294174f35ce3fdc9eb617bdf394ba8ebe148ea840419fe2f2370",
+      "notes": "Live catalogue discovery follows resource pagination and selects latest CSV. 21 raw records; matches retain provenance.",
+      "license": "CC0 1.0",
+      "license_reviewed": true
+    },
+    {
+      "id": "przemysl",
+      "name": "Miasto Przemyśl (dane.gov.pl #4581)",
+      "provider_or_catalogue_url": "https://api.dane.gov.pl/media/resources/20241106/1730818801_b50R6UVxPgoVdBbq.geojson",
+      "raw_imported_records_at_audit": 21,
+      "adapter_status": "configured",
+      "last_successful_download": "https://api.dane.gov.pl/resources/62093,lokalizacje-aed-automatycznych-defibrylatorow-zewnetrznych-w-przemyslu/file",
+      "sha256": "2f49fe5394c1eb9e841ad5921b19c1cade6b843278d7283534658f0caba01797",
+      "notes": "Live catalogue selects latest GeoJSON. Unmatched records are candidates for review. Generic AED descriptions are not cabinet directions.",
+      "license": "CC0 1.0",
+      "license_reviewed": true
+    },
+    {
+      "id": "marki",
+      "name": "Gmina Miasto Marki (dane.gov.pl #4955)",
+      "provider_or_catalogue_url": "https://api.dane.gov.pl/media/resources/20250710/Defibrylator_GminaMiastoMarki_1.csv",
+      "raw_imported_records_at_audit": 8,
+      "adapter_status": "configured",
+      "last_successful_download": "https://api.dane.gov.pl/resources/68353,defibrylatory-zlokalizowane-na-terenie-miasta-marki/file",
+      "sha256": "d42a91e47d3a89f9e2937aaaafe31c7736306c456967ae525d994a1c3743be05",
+      "notes": "Live catalogue CSV; extra quoting and axis correction retained. Shared coordinates/out-of-area school entry quarantined.",
+      "license": "CC BY 4.0",
+      "license_reviewed": true
+    },
+    {
+      "id": "warszawa",
+      "name": "Urząd m.st. Warszawy (dane.gov.pl #39512 / SCB)",
+      "provider_or_catalogue_url": "https://dane.um.warszawa.pl/pl/catalogue/7bc32ffc-c2ac-4d32-83c9-b6f7a0b38de8",
+      "raw_imported_records_at_audit": 0,
+      "adapter_status": "requires_api_token",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "Official catalogue #39512 links API documentation, not an actual downloadable AED GeoJSON. Implemented POST adapter requires WARSAW_API_TOKEN. Existing undocumented local snapshot is held.",
+      "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "inpost",
+      "name": "Sieć Paczkomat® InPost AED",
+      "provider_or_catalogue_url": "https://inpost.pl/aktulanosci-defibrylatory-AED-lokalizacje",
+      "raw_imported_records_at_audit": 189,
+      "adapter_status": "configured",
+      "last_successful_download": "https://inpost.pl/aktulanosci-defibrylatory-AED-lokalizacje",
+      "sha256": "640f38df12c5c23b9f53a6f5bce7236df80aa4dcc87c35d827aa95349778921c",
+      "notes": "Official AED-specific locker list joined to public ShipX coordinates by locker ID. Does not infer readiness, unlock status, field checks or 24/7 hours. Partial geolocation failure preserves previous observations.",
+      "license": "Publiczna lista operatora; warunki redystrybucji wymagają zatwierdzenia wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "bydgoszcz",
+      "name": "Miasto Bydgoszcz – Miejski Rejestr AED",
+      "provider_or_catalogue_url": "https://www.bydgoszcz.pl/",
+      "raw_imported_records_at_audit": 0,
+      "adapter_status": "awaiting_adapter",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "Candidate endpoint inherited from the existing configuration. No working provider adapter or verified snapshot provenance. Local demonstration snapshot is held and excluded from public locations. Homepage is not a data feed.",
+      "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "trojmiasto",
+      "name": "Otwarte Dane Trójmiasto (Gdańsk · Gdynia · Sopot)",
+      "provider_or_catalogue_url": "https://ckan.multimediagdansk.pl/",
+      "raw_imported_records_at_audit": 0,
+      "adapter_status": "awaiting_adapter",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "Candidate endpoint inherited from the existing configuration. No working provider adapter or verified snapshot provenance. Local demonstration snapshot is held and excluded from public locations. Homepage is not a data feed.",
+      "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "krakow",
+      "name": "MSIP Kraków – Małopolski Rejestr AED",
+      "provider_or_catalogue_url": "https://msip.krakow.pl/",
+      "raw_imported_records_at_audit": 0,
+      "adapter_status": "awaiting_adapter",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "Candidate endpoint inherited from the existing configuration. No working provider adapter or verified snapshot provenance. Local demonstration snapshot is held and excluded from public locations. Homepage is not a data feed.",
+      "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "wroclaw",
+      "name": "Otwarte Dane Wrocław – Rejestr AED",
+      "provider_or_catalogue_url": "https://opendata.cui.wroclaw.pl/",
+      "raw_imported_records_at_audit": 0,
+      "adapter_status": "awaiting_adapter",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "Candidate endpoint inherited from the existing configuration. No working provider adapter or verified snapshot provenance. Local demonstration snapshot is held and excluded from public locations. Homepage is not a data feed.",
+      "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "poznan",
+      "name": "SIP Poznań – Miejska Sieć AED",
+      "provider_or_catalogue_url": "https://www.poznan.pl/mim/plan/",
+      "raw_imported_records_at_audit": 0,
+      "adapter_status": "awaiting_adapter",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "Candidate endpoint inherited from the existing configuration. No working provider adapter or verified snapshot provenance. Local demonstration snapshot is held and excluded from public locations. Homepage is not a data feed.",
+      "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "katowice_gzm",
+      "name": "Otwarte Dane GZM & Katowice",
+      "provider_or_catalogue_url": "https://otwartedane.metropoliagzm.pl/",
+      "raw_imported_records_at_audit": 0,
+      "adapter_status": "awaiting_adapter",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "Candidate endpoint inherited from the existing configuration. No working provider adapter or verified snapshot provenance. Local demonstration snapshot is held and excluded from public locations. Homepage is not a data feed.",
+      "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "pkp_transport",
+      "name": "PKP S.A. & Węzły Transportowe (Dworce i Lotniska)",
+      "provider_or_catalogue_url": "https://www.pkp.pl/",
+      "raw_imported_records_at_audit": 0,
+      "adapter_status": "awaiting_adapter",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "Candidate endpoint inherited from the existing configuration. No working provider adapter or verified snapshot provenance. Local demonstration snapshot is held and excluded from public locations. Homepage is not a data feed.",
+      "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "ratuj_z_sercem",
+      "name": "Sieć Ratuj z Sercem · OSP · Edukacja",
+      "provider_or_catalogue_url": "https://www.ratujzsercem.pl/",
+      "raw_imported_records_at_audit": 0,
+      "adapter_status": "awaiting_adapter",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "Candidate endpoint inherited from the existing configuration. No working provider adapter or verified snapshot provenance. Local demonstration snapshot is held and excluded from public locations. Homepage is not a data feed.",
+      "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "bzp_wawer",
+      "name": "e-Zamówienia BZP & CRU/TED (Postępowanie 340/NZ/2026 CPV 33182100-0)",
+      "provider_or_catalogue_url": "https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08def2c5-4a57-0f74-962b-12000166a405",
+      "raw_imported_records_at_audit": 0,
+      "adapter_status": "procurement_lead_only",
+      "last_successful_download": null,
+      "sha256": null,
+      "notes": "Only the concrete 340/NZ/2026 lead supplied by the merged plan is staged. 12 units in procurement scope do not substantiate 12 mapped locations. Generic CRU/TED synthetic lead is excluded.",
+      "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+      "license_reviewed": false
+    },
+    {
+      "id": "legionowo",
+      "name": "Miasto Legionowo (dane.gov.pl #40593)",
+      "provider_or_catalogue_url": "https://api.dane.gov.pl/media/resources/20260914/aed.csv",
+      "raw_imported_records_at_audit": 24,
+      "adapter_status": "configured",
+      "last_successful_download": "https://api.dane.gov.pl/resources/2625221,wykaz-defibrylatorow-aed-wraz-z-ich-lokalizacja-w-legionowie/file",
+      "sha256": "a029cdc57fc4805ba6213ed34d008a7d84bb98bc512dab77ad894b5dc22ad3fd",
+      "license": "CC0 1.0",
+      "license_reviewed": true,
+      "notes": "24 official CSV records, CC0 verified from dataset40593. Mixed health dataset: resource title must match AED/defibrillator, so newer pharmacy feeds are excluded. No field access/check evidence inferred. Source has no device ID; stable hash of name and address; renames need identity review. Distinct devices at same coordinates retained."
+    }
+  ],
+  "additional_verified_endpoints": [
+    {
+      "url": "https://dane.przemysl.eu/zasoby-danych/defibrylatory-aed-na-terenie-miasta-przemysla/",
+      "kind": "official current resource documentation",
+      "status": "reviewed"
+    },
+    {
+      "url": "https://dane.przemysl.eu/wp-json/sod/v1/resources/15/data?format=geojson&limit=1000",
+      "kind": "official municipal GeoJSON API",
+      "status": "live fetch verified: 21 points",
+      "integration_note": "Same Przemyśl dataset, not a second independent database. Can replace the catalogue adapter after upstream refresh/date policy review."
+    },
+    {
+      "url": "https://dane.um.warszawa.pl/files/scb_lokalizacja_defibrylatorow_pa.json",
+      "kind": "official API parameter documentation",
+      "status": "live fetch verified; token mandatory"
+    },
+    {
+      "url": "https://dane.um.warszawa.pl/files/scb_lokalizacja_defibrylatorow_pw.json",
+      "kind": "official API examples",
+      "status": "live fetch verified; nested point coordinates mapped by adapter"
+    },
+    {
+      "url": "https://www.wspr.bydgoszcz.pl/blog/aed-w-siedzibie-administracji-wspr/",
+      "kind": "provider article with one address and access hours",
+      "status": "reviewed; address-only lead, no machine-readable feed integrated"
+    },
+    {
+      "url": "https://download.cloudgdansk.pl/bip-pl/download/rmg_p/2025/5918598_odp_01.pdf?2785=",
+      "kind": "official Gdańsk response about city AED inventory",
+      "status": "reviewed; PDF context, no geocoded machine-readable feed integrated"
+    }
+  ],
+  "limitations": [
+    "No claim that all possible Polish sources have been integrated. Several providers need credentials, permissions or a confirmed export endpoint.",
+    "Publisher and reuse review is still required before submitting any package to dane.gov.pl; metadata explicitly labels draft status.",
+    "CRU/BZP/TED procurement notices are leads for independent placement confirmation, never active AED markers.",
+    "Source refresh needs the server running; persistent scheduler state resumes overdue work after restart. An external process manager should keep the server alive."
+  ],
+  "catalogue_search_at_audit": {
+    "resource_search": "https://api.dane.gov.pl/1.4/resources?q=defibrylator",
+    "result": "Found municipal resources for Krosno, Przemyśl, Marki, Legionowo, plus Gdańsk bus-fleet context. Warsaw API docs found separately by AED query. No claim of exhaustive national coverage."
+  }
+}
