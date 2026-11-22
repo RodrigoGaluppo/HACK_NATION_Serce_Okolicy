@@ -12,6 +12,10 @@ The project separates its **public campaign landing page** (deployed as a static
   - Navigation headers inside the local app (`/app`, `/zglos`, `/panel`) link back to `/` (**O projekcie** / campaign landing page), while the landing page remains strictly self-contained.
   - Full **PL / EN** bilingual switching is built into the landing page, the interactive map PWA, the contribution intake screen, and the editor workspace.
 
+## Standalone LoRa device prototypes
+
+[`Lora/`](Lora/README.md) contains isolated Heltec V3 sender/receiver firmware, a hardcoded Bydgoszcz AED snapshot, a CYD nearest-location list, and a T-Watch 2020 V1 MicroPython interface with a Python loader. The displays receive LoRa locations through a Heltec bridge; distances use an explicitly labeled fixed reference, not GPS. See its README for exact hardware, wiring, flashing, data provenance and tests. This optional folder does not change the running server, PWA or data pipeline.
+
 ---
 
 ## 1. System Architecture & Deployment Topology
