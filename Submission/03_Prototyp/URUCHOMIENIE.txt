@@ -1,0 +1,5 @@
+Prototyp uruchamiany lokalnie (Python 3.10+):
+  python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+  .venv/bin/python prepare_data.py --refresh
+  .venv/bin/python server.py --host 127.0.0.1 --port 8000
+Szczegóły: README.md w repozytorium https://github.com/rodrigogaluppo/HACK_NATION_Serce_Okolicy

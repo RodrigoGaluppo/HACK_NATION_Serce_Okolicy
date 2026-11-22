@@ -1,0 +1,12 @@
+Serce Okolicy — zakres wykorzystania sztucznej inteligencji
+(Regulamin zadania „Misja AED – Dane na ratunek”, § 2 ust. 7–8)
+
+Pomysł, koncepcja rozwiązania i kampanii „Masz AED? Pokaż, gdzie!” są nasze.
+
+Sztuczną inteligencję wykorzystaliśmy jako narzędzie pomocnicze do:
+- wyszukiwania informacji i agregacji danych o defibrylatorach AED z wielu źródeł,
+- pisania kodu oraz testowania tras (endpointów) aplikacji pod kątem bezpieczeństwa,
+- przygotowania filmu i ikon,
+- wygenerowania logo — w toku rozmowy z AI, na podstawie naszych założeń i naszej identyfikacji wizualnej.
+
+Wszystkie wyniki pracy AI przejrzeliśmy, poprawiliśmy i zatwierdziliśmy. Rozwiązanie jest efektem naszej analizy i pracy.

@@ -1,5 +1,36 @@
 # Serce Okolicy · Odblokuj AED
 
+## 📦 Materiały zgłoszeniowe — Misja AED, HackNation 2026
+
+To repozytorium zawiera komplet materiałów wymaganych w zadaniu „Misja AED — Dane na ratunek” (treść zadania, § 4). Kod źródłowy prototypu znajduje się w głównym katalogu repozytorium, a pozostałe pliki zgłoszenia w folderze [`Submission/`](Submission/).
+
+```
+Submission/
+├── 01_Opis_projektu/            Tytuł i szczegółowy opis projektu (PDF, MD)
+├── 02_Prezentacja/              Prezentacja: 10 slajdów (PDF, PPTX)
+├── 03_Prototyp/                 Uruchomienie prototypu i przykładowy eksport danych
+│   └── eksport_dane_gov_pl/     CSV, GeoJSON i metadane gotowe do publikacji
+├── 04_Wzorcowy_zakres_danych/   Wzorcowy zakres danych o AED (XLSX)
+├── 06_Logo/                     Logotyp: svg/ · pdf/ · png/ · jpg/
+├── 07_Ksiega_znaku/             Księga znaku (PDF)
+├── 08_Wykorzystanie_AI/         Zakres wykorzystania sztucznej inteligencji (TXT)
+├── 09_Materialy_dodatkowe/      Film kampanii, okładka, linki
+└── README.md                    Szczegółowy opis zawartości
+```
+
+| Wymaganie (§ 4) | Gdzie |
+|---|---|
+| Szczegółowy opis i tytuł projektu | [`Submission/01_Opis_projektu/`](Submission/01_Opis_projektu/) |
+| Prezentacja (zrzuty ekranu, kroki użytkownika, ograniczenia) | [`Submission/02_Prezentacja/`](Submission/02_Prezentacja/) |
+| Prototyp rozwiązania | kod w tym repozytorium · instrukcja i przykładowy eksport: [`Submission/03_Prototyp/`](Submission/03_Prototyp/) |
+| Wzorcowy zakres danych (XLSX) | [`Submission/04_Wzorcowy_zakres_danych/`](Submission/04_Wzorcowy_zakres_danych/) |
+| Kod źródłowy | to repozytorium |
+| Logotyp (.jpg, .png, .pdf, .svg) | [`Submission/06_Logo/`](Submission/06_Logo/) |
+| Księga znaku (PDF) | [`Submission/07_Ksiega_znaku/`](Submission/07_Ksiega_znaku/) |
+| Zakres wykorzystania AI (Regulamin § 2 ust. 8) | [`Submission/08_Wykorzystanie_AI/`](Submission/08_Wykorzystanie_AI/) |
+
+> Numeracja folderów odpowiada kolejności wymagań w treści zadania; wymaganie 5 (kod źródłowy) to samo repozytorium.
+
 **Serce Okolicy · Odblokuj AED** to system agregacji otwartych danych o automatycznych defibrylatorach zewnętrznych (AED), rejestr przestrzenny oraz progresywna aplikacja internetowa (PWA) działająca offline. Projekt obejmuje przyjmowanie zgłoszeń od organizacji i panel redakcyjny z uwierzytelnianiem. Powstał na potrzeby wyzwania **Misja AED** (`dane.gov.pl`).
 
 Projekt rozdziela **publiczną stronę kampanii**, publikowaną jako witryna statyczna w **GitHub Pages**, od **aplikacji Python + SQLite R\*Tree**, uruchamianej lokalnie i obsługującej pracę offline bez zależności od chmury:

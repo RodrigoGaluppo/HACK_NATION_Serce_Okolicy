@@ -1,0 +1,250 @@
+{
+  "dataset": {
+    "title": "Ogólnopolski rejestr defibrylatorów AED – Serce Okolicy / Odblokuj AED",
+    "description": "Zintegrowany, otwarty zbiór danych o lokalizacji, dostępności, szafkach i poziomie pewności defibrylatorów AED w Polsce z wielu rozproszonych źródeł publicznych, samorządowych i operatorskich.",
+    "category": "HEAL",
+    "category_label": "Zdrowie (HEAL)",
+    "keywords": [
+      "AED",
+      "defibrylatory",
+      "ratownictwo",
+      "pierwsza pomoc",
+      "otwarte dane",
+      "Serce Okolicy",
+      "Odblokuj AED"
+    ],
+    "language": "pl",
+    "publisher": "Inicjatywa Serce Okolicy · Odblokuj AED",
+    "reuse_terms": "© OpenStreetMap contributors, ODbL 1.0. Pozostałe warunki: zgodnie z inwentarzem źródeł; do przeglądu wydawcy.",
+    "update_frequency": "codziennie",
+    "geographic_scope": "Polska (16 województw)",
+    "has_high_value_data": null,
+    "has_dynamic_data": null
+  },
+  "resources": [
+    {
+      "filename": "aed.csv",
+      "title": "Ogólnopolski wykaz defibrylatorów AED (tabela CSV)",
+      "description": "Tabela główna w standardzie RFC 4180 UTF-8 CRLF obejmująca rekordy z potwierdzonymi współrzędnymi oraz rekordy adresowe (coordinate_status=address_only).",
+      "format": "csv",
+      "media_type": "text/csv; charset=utf-8",
+      "language": "pl",
+      "data_date": "2026-11-22",
+      "record_count": 15299,
+      "sha256": "4ac4d99e3fa265846178fcf0f4a438633502a870799c6e674d428af70c0cb05f"
+    },
+    {
+      "filename": "aed.geojson",
+      "title": "Mapa defibrylatorów AED w Polsce (GeoJSON RFC 7946)",
+      "description": "Widok przestrzenny (FeatureCollection Point WGS84 [longitude, latitude]) wszystkich zatwierdzonych urządzeń AED z potwierdzonymi współrzędnymi (coordinate_status=located).",
+      "format": "geojson",
+      "media_type": "application/geo+json",
+      "language": "pl",
+      "data_date": "2026-11-22",
+      "record_count": 15299,
+      "sha256": "318367f84f2832745077cfda539fd526524a596eb00fd27f9891c911cd0a06ca"
+    }
+  ],
+  "release": {
+    "generated_at": "2026-11-22T07:47:20.014519+00:00",
+    "data_date": "2026-11-22",
+    "schema_version": "1.1",
+    "content_sha256": "bbe37a187bea49fc8b2f14716502d2d7a555fa1187a18c56162798d78850bc10",
+    "status": "draft_pending_publisher_and_reuse_review",
+    "sync_schedule": "codziennie (automatyczna synchronizacja co 24h)",
+    "fields": [
+      "aed_id",
+      "site_name",
+      "locality",
+      "municipality",
+      "teryt",
+      "street",
+      "house_number",
+      "postcode",
+      "coordinate_status",
+      "longitude",
+      "latitude",
+      "coordinate_accuracy_m",
+      "placement",
+      "indoor_outdoor",
+      "level",
+      "cabinet_lock_status",
+      "access_instructions",
+      "device_type",
+      "access_type",
+      "opening_hours",
+      "access_status",
+      "readiness_status",
+      "public_operator_name",
+      "public_operator_contact_url",
+      "location_checked_on",
+      "access_checked_on",
+      "readiness_checked_on",
+      "is_stale",
+      "source_ids",
+      "field_sources"
+    ],
+    "source_inventory": {
+      "osm": {
+        "name": "OpenAEDMap / OpenStreetMap Polska",
+        "url": "https://openaedmap.org/api/v1/countries/PL.geojson",
+        "scope": "Ogólnopolski",
+        "license": "ODbL 1.0 (OpenStreetMap)",
+        "cadence": "codziennie (24h)",
+        "owner": "Społeczność OSM / OpenAEDMap",
+        "status": "configured",
+        "license_reviewed": true,
+        "license_url": "https://www.openstreetmap.org/copyright"
+      },
+      "krosno": {
+        "name": "Miasto Krosno (dane.gov.pl #3624)",
+        "url": "https://api.dane.gov.pl/media/resources/20240219/Defibrylator_jAmxQcp.csv",
+        "scope": "Krosno (woj. podkarpackie)",
+        "license": "CC0 1.0",
+        "cadence": "codziennie (24h)",
+        "owner": "Urząd Miasta Krosna",
+        "status": "configured",
+        "license_reviewed": true,
+        "license_metadata_url": "https://api.dane.gov.pl/1.4/datasets/3624",
+        "custom_terms": ""
+      },
+      "przemysl": {
+        "name": "Miasto Przemyśl (dane.gov.pl #4581)",
+        "url": "https://api.dane.gov.pl/media/resources/20241106/1730818801_b50R6UVxPgoVdBbq.geojson",
+        "scope": "Przemyśl (woj. podkarpackie)",
+        "license": "CC0 1.0",
+        "cadence": "codziennie (24h)",
+        "owner": "Urząd Miejski w Przemyślu",
+        "status": "configured",
+        "license_reviewed": true,
+        "license_metadata_url": "https://api.dane.gov.pl/1.4/datasets/4581",
+        "custom_terms": ""
+      },
+      "marki": {
+        "name": "Gmina Miasto Marki (dane.gov.pl #4955)",
+        "url": "https://api.dane.gov.pl/media/resources/20250710/Defibrylator_GminaMiastoMarki_1.csv",
+        "scope": "Marki (woj. mazowieckie)",
+        "license": "CC BY 4.0",
+        "cadence": "codziennie (24h)",
+        "owner": "Urząd Miasta Marki",
+        "status": "configured",
+        "license_reviewed": true,
+        "license_metadata_url": "https://api.dane.gov.pl/1.4/datasets/4955",
+        "custom_terms": ""
+      },
+      "warszawa": {
+        "name": "Urząd m.st. Warszawy (dane.gov.pl #39512 / SCB)",
+        "url": "https://dane.um.warszawa.pl/pl/catalogue/7bc32ffc-c2ac-4d32-83c9-b6f7a0b38de8",
+        "scope": "m.st. Warszawa (woj. mazowieckie)",
+        "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "Urząd m.st. Warszawy (SCB)",
+        "status": "requires_api_token"
+      },
+      "inpost": {
+        "name": "Sieć Paczkomat® InPost AED",
+        "url": "https://inpost.pl/aktulanosci-defibrylatory-AED-lokalizacje",
+        "scope": "Ogólnopolski (Sieć Paczkomat®)",
+        "license": "Publiczna lista operatora; warunki redystrybucji wymagają zatwierdzenia wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "InPost sp. z o.o.",
+        "status": "configured",
+        "license_reviewed": false
+      },
+      "bydgoszcz": {
+        "name": "Miasto Bydgoszcz – Miejski Rejestr AED",
+        "url": "https://www.bydgoszcz.pl/",
+        "scope": "Bydgoszcz (woj. kujawsko-pomorskie)",
+        "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "Miasto Bydgoszcz",
+        "status": "awaiting_adapter"
+      },
+      "trojmiasto": {
+        "name": "Otwarte Dane Trójmiasto (Gdańsk · Gdynia · Sopot)",
+        "url": "https://ckan.multimediagdansk.pl/",
+        "scope": "Gdańsk, Gdynia, Sopot (woj. pomorskie)",
+        "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "Trójmiejski Rejestr AED",
+        "status": "awaiting_adapter"
+      },
+      "krakow": {
+        "name": "MSIP Kraków – Małopolski Rejestr AED",
+        "url": "https://msip.krakow.pl/",
+        "scope": "Kraków (woj. małopolskie)",
+        "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "Urząd Miasta Krakowa",
+        "status": "awaiting_adapter"
+      },
+      "wroclaw": {
+        "name": "Otwarte Dane Wrocław – Rejestr AED",
+        "url": "https://opendata.cui.wroclaw.pl/",
+        "scope": "Wrocław (woj. dolnośląskie)",
+        "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "Urząd Miejski Wrocławia",
+        "status": "awaiting_adapter"
+      },
+      "poznan": {
+        "name": "SIP Poznań – Miejska Sieć AED",
+        "url": "https://www.poznan.pl/mim/plan/",
+        "scope": "Poznań (woj. wielkopolskie)",
+        "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "Urząd Miasta Poznania",
+        "status": "awaiting_adapter"
+      },
+      "katowice_gzm": {
+        "name": "Otwarte Dane GZM & Katowice",
+        "url": "https://otwartedane.metropoliagzm.pl/",
+        "scope": "Metropolia GZM / Katowice (woj. śląskie)",
+        "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "Górnośląsko-Zagłębiowska Metropolia",
+        "status": "awaiting_adapter"
+      },
+      "pkp_transport": {
+        "name": "PKP S.A. & Węzły Transportowe (Dworce i Lotniska)",
+        "url": "https://www.pkp.pl/",
+        "scope": "Ogólnopolski (Dworce PKP i Lotniska)",
+        "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "PKP S.A. / Zarządcy Węzłów",
+        "status": "awaiting_adapter"
+      },
+      "ratuj_z_sercem": {
+        "name": "Sieć Ratuj z Sercem · OSP · Edukacja",
+        "url": "https://www.ratujzsercem.pl/",
+        "scope": "Ogólnopolski (OSP, Szkoły, Instytucje)",
+        "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "Sieć Ratuj z Sercem / OSP",
+        "status": "awaiting_adapter"
+      },
+      "bzp_wawer": {
+        "name": "e-Zamówienia BZP & CRU/TED (Postępowanie 340/NZ/2026 CPV 33182100-0)",
+        "url": "https://ezamowienia.gov.pl/mo-client-board/bzp/notice-details/id/08def2c5-4a57-0f74-962b-12000166a405",
+        "scope": "Warszawa Wawer + Ogólnopolski BZP/TED",
+        "license": "Warunki ponownego wykorzystania wymagają przeglądu wydawcy",
+        "cadence": "codziennie (24h)",
+        "owner": "Urząd Zamówień Publicznych (BZP)",
+        "status": "procurement_lead_only"
+      },
+      "legionowo": {
+        "name": "Miasto Legionowo (dane.gov.pl #40593)",
+        "url": "https://api.dane.gov.pl/media/resources/20260914/aed.csv",
+        "scope": "Legionowo (woj. mazowieckie)",
+        "license": "CC0 1.0",
+        "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "cadence": "codziennie (24h)",
+        "owner": "Gmina Miejska Legionowo",
+        "status": "configured",
+        "license_reviewed": true,
+        "id_policy": "SHA-256 nazwy i adresu; źródło nie publikuje identyfikatora urządzenia. Zmiany nazwy/adresu wymagają przeglądu dopasowania.",
+        "custom_terms": ""
+      }
+    }
+  }
+}
