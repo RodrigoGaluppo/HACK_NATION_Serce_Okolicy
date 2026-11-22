@@ -14,6 +14,24 @@ Projekt rozdziela **publiczną stronę kampanii**, publikowaną jako witryna sta
 
 **Zobacz produkt w działaniu:** [zrzuty ekranu mapy, narzędzi offline i panelu danych](#zrzuty-ekranu-produktu).
 
+## Pakiet zgłoszeniowy — Submission.zip
+
+[**Pobierz Submission.zip**](Submission.zip) — archiwum materiałów konkursowych projektu **Serce Okolicy — „Masz AED? Pokaż, gdzie!”**. Wewnątrz znajduje się katalog `Submission/` z własnym README. Zawartość odpowiada następującym elementom zgłoszenia:
+
+| Element wymagany lub dodatkowy | Zawartość paczki / miejsce dostępu |
+| --- | --- |
+| Tytuł i szczegółowy opis projektu | `01_Opis_projektu/` — opis w PDF i Markdown. |
+| Prezentacja funkcji, kroków użytkownika i ograniczeń | `02_Prezentacja/` — 10 slajdów w PDF i edytowalnym PPTX, w tym zrzuty mapy i panelu. |
+| Prototyp | `03_Prototyp/URUCHOMIENIE.txt` — instrukcja uruchomienia kodu z repozytorium; `eksport_dane_gov_pl/` — przykładowe dane CSV, GeoJSON i metadane JSON. |
+| Wzorcowy zakres danych | `04_Wzorcowy_zakres_danych/` — arkusz XLSX ze wzorcem danych AED. |
+| Kod źródłowy | [Repozytorium projektu](https://github.com/RodrigoGaluppo/HACK_NATION_Serce_Okolicy) — kod jest udostępniony osobno, nie jest osadzony w ZIP-ie. |
+| Logotyp | `06_Logo/` — 10 wariantów w SVG (format otwarty), PDF, PNG i JPG. |
+| Księga znaku | `07_Ksiega_znaku/` — PDF opisujący m.in. koncepcję, kolorystykę, pole ochronne, minimalne wielkości i niedozwolone użycie. |
+| Wykorzystanie AI | `08_Wykorzystanie_AI/` — oświadczenie o zakresie wsparcia AI i autorstwie pomysłu. |
+| Materiały dodatkowe | `09_Materialy_dodatkowe/` — film MP4, okładka JPG i odsyłacze. |
+
+Dane do przetwarzania maszynowego są dostępne w CSV, GeoJSON i JSON. Prototyp wymaga pobrania kodu z repozytorium i uruchomienia według instrukcji; publiczna strona GitHub Pages prezentuje kampanię. Dokumentacja opisuje ograniczenia, w tym brak pełnego audytu WCAG. Przed formalnym zgłoszeniem należy uzupełnić nazwiska zespołu w opisie oraz dopilnować wymagania co najmniej pięciu slajdów z dowodami realizacji wymagań technicznych — obecne zrzuty działania skupiono na slajdach 4–5.
+
 ## Oświadczenie o wykorzystaniu sztucznej inteligencji
 
 **Pomysł na Serce Okolicy, koncepcja produktu i jego założenia są autorstwa naszego zespołu.** Sztuczną inteligencję wykorzystywaliśmy jako narzędzie wspierające realizację naszego pomysłu.
